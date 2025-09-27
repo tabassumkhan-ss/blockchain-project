@@ -1,46 +1,43 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { import React, { useContext } from "react";
-import { FormContext } from "../FormContext"; } from "../FormContext";
+import { useFormData } from "../FormContext";
 import FormCard from "../components/FormCard";
 import FormInput from "../components/FormInput";
 
 export default function AadhaarPage() {
+  const { update } = useFormData();
   const [aadhaar, setAadhaar] = useState("");
   const navigate = useNavigate();
-  const { update } = import React, { useContext } from "react";
-import { FormContext } from "../FormContext";();
 
-  const onOk = () => {
-    if (!aadhaar) {
-      alert("Enter Aadhaar number");
+  const handleNext = () => {
+    if (!/^\d{12}$/.test(aadhaar)) {
+      alert("Enter a valid 12-digit Aadhaar number");
       return;
     }
     update({ aadhaar });
-    navigate("/profile");
+    navigate("/profile-form");
   };
 
   return (
-    <FormCard title="Enter Aadhaar Number">
+    <FormCard title="Aadhaar Verification">
       <FormInput
         label="Aadhaar Number"
         value={aadhaar}
         onChange={(e) => setAadhaar(e.target.value)}
-        placeholder="XXXX-XXXX-XXXX"
+        placeholder="Enter 12-digit Aadhaar number"
       />
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: "center", marginTop: 16 }}>
         <button
-          onClick={onOk}
+          onClick={handleNext}
           style={{
             padding: "10px 20px",
-            background: "#007bff",
+            background: "#28a745",
             color: "white",
             border: "none",
             borderRadius: 6,
-            cursor: "pointer",
           }}
         >
-          OK
+          Next
         </button>
       </div>
     </FormCard>
